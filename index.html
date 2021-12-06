@@ -11,9 +11,70 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    <div class="container">
-
+    <!-- weather dashboard jumbotron -->
+    <div class="jumbotron jumbotron-fluid">
+        Weather Dashboard
     </div>
+    <!-- large container to contain it all -->
+    <div class="container-fluid border border-primary">
+        <!-- city search and quicklinks -->
+        <div class="col-4">
+            <!-- city search -->
+            <div class="bg-danger">
+                <!-- header -->
+                <p>Search for a City:</p>
+                <!-- input field -->
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="type city name" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <!-- search button -->
+                <button class="btn btn-outline-secondary bg-primary text-white" type="button" id="searchBtn">
+                    Search                    
+                </button>
+
+            </div>
+            <!-- city quicklinks -->
+            <div class="bg-warning">
+    
+            </div>
+        </div>
+        <!-- weather results + 5 day forecast -->
+        <div class="col-8">
+            <!-- current weather -->
+            <div class="row bg-info">
+                <!-- current city name & date -->
+                <div>
+
+                </div>
+                <!-- temperature -->
+                <div>
+
+                </div>
+                <!-- wind -->
+                <div>
+
+                </div>
+                <!-- humidity -->
+                <div>
+
+                </div>
+                <!-- uv index -->
+                <div>
+
+                </div>
+            </div>
+            <!-- 5 day forecast -->
+            <div class="row bg-success">
+                <!-- cards of the 5 days -->
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </div>
+        </div>
+    </div>
+    
     
     <!-- jquery + js -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
