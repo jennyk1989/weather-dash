@@ -17,60 +17,66 @@
     </div>
     <!-- large container to contain it all -->
     <div class="container-fluid border border-primary">
-        <!-- city search and quicklinks -->
-        <div class="col-4">
-            <!-- city search -->
-            <div class="bg-danger">
-                <!-- header -->
-                <p>Search for a City:</p>
-                <!-- input field -->
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="type city name" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-                <!-- search button -->
-                <button class="btn btn-outline-secondary bg-primary text-white" type="button" id="searchBtn">
-                    Search                    
-                </button>
-
-            </div>
-            <!-- city quicklinks -->
-            <div class="bg-warning">
+        <!-- container for left side & right side of page -->
+        <div class="row">
+            <!-- city search and quicklinks -->
+            <div class="col-4">
+                <!-- city search -->
+                <div class="bg-danger" id="citySearch">
+                    <!-- header -->
+                    <p>Search for a City:</p>
+                    <!-- input field -->
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="type city name" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <!-- search button -->
+                    <button class="btn btn-outline-secondary bg-primary text-white" type="button" id="searchBtn">
+                        Search                    
+                    </button>
     
-            </div>
-        </div>
-        <!-- weather results + 5 day forecast -->
-        <div class="col-8">
-            <!-- current weather -->
-            <div class="row bg-info">
-                <!-- current city name & date -->
-                <div>
-
                 </div>
-                <!-- temperature -->
-                <div>
-
-                </div>
-                <!-- wind -->
-                <div>
-
-                </div>
-                <!-- humidity -->
-                <div>
-
-                </div>
-                <!-- uv index -->
-                <div>
-
+                <!-- city quicklinks -->
+                <div class="bg-warning">
+                    history of searches here
                 </div>
             </div>
-            <!-- 5 day forecast -->
-            <div class="row bg-success">
-                <!-- cards of the 5 days -->
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+            <!-- weather results + 5 day forecast -->
+            <div class="col-8">
+                <!--********** current weather **********-->
+                <div class="col-12">
+                    <!-- current city name & date -->
+                    <div id="currentCity">
+                        current city (placeholder)
+                    </div>
+                    <!-- temperature -->
+                    <div id="currentTemp" >
+                        current temp (placeholder)
+                    </div>
+                    <!-- wind -->
+                    <div id="currentWind">
+                        current WIND (placeholder)
+                    </div>
+                    <!-- humidity -->
+                    <div id="currentHumidity">
+                        current HUMIDITY (placeholder)
+                    </div>
+                    <!-- uv index -->
+                    <div id="currentUV">
+                        current UV INDEX (placeholder)
+                    </div>
+                </div>
+                <!--********** 5 day forecast **********-->
+                <div class="d-inline-flex flex-column bd-highlight mb-3r">
+                    <p class="p-2 bd-highlight">5-Day Forecast: </p>
+                    <!-- cards of the 5 days -->
+                    <div class="p-2 bd-highlight d-flex justify-content-evenly">
+                        <div class="card">card1</div>
+                        <div class="card">card2</div>
+                        <div class="card">card3</div>
+                        <div class="card">card4</div>
+                        <div class="card">card5</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
