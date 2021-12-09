@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" src="assets/style.css">
     <title>Weather Dashboard</title>
 </head>
 <body>
@@ -22,22 +22,27 @@
             <!-- city search and quicklinks -->
             <div class="col-4">
                 <!-- city search -->
-                <div class="bg-danger" id="citySearch">
+                <div class="card" id="citySearch">
                     <!-- header -->
-                    <p>Search for a City:</p>
+                    <h3 class="card-header">Search for a City:</h3>
                     <!-- input field -->
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="type city name" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" id="city" class="form-control" placeholder="type city name" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                     <!-- search button -->
-                    <button class="btn btn-outline-secondary bg-primary text-white" type="button" id="searchBtn">
+                    <button class="btn btn-outline-secondary bg-primary text-white" type="submit" id="searchBtn">
                         Search                    
                     </button>
     
                 </div>
                 <!-- city quicklinks -->
-                <div class="bg-warning">
-                    history of searches here
+                <div class="card bg-warning" >
+                    <div class="card-header">
+                        Searches: 
+                    </div>
+                    <div class="list-group" id="searchHistory">
+                        <!-- append city names here -->
+                    </div>
                 </div>
             </div>
             <!-- weather results + 5 day forecast -->
@@ -66,7 +71,7 @@
                     </div>
                 </div>
                 <!--********** 5 day forecast **********-->
-                <div class="d-inline-flex flex-column bd-highlight mb-3r">
+                <div class="d-inline-flex flex-column bd-highlight mb-3r" id="fiveDay">
                     <p class="p-2 bd-highlight">5-Day Forecast: </p>
                     <!-- cards of the 5 days -->
                     <div class="p-2 bd-highlight d-flex justify-content-evenly">
@@ -85,6 +90,6 @@
     <!-- jquery + js -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="/assets/script.js"></script>
+    <script src="assets/script.js"></script>
 </body>
 </html>
