@@ -2,11 +2,6 @@
 
 //weather condition variables:
 let currentWeather = $("#currentWeather");
-let currentCity = $("#currentCity");
-let currentTemp = $("#currentTemp");
-let currentWind = $("#currentWind");
-let currentHumidity = $("#currentHumidity");
-let currentUV = $("#currentUV");
 //search variables
 let searchBtn = $("#searchBtn");
 let searchHistory = $("#searchHistory");
@@ -44,33 +39,26 @@ function getWeather (city) {
 function displayWeather(data) {
     //first clear previous data (if any)
     //$(currentWeather).hide(); //make sure current weather is empty
-    //city name
+    //variables to handles the city-specific data coming from the API
     let cityName = data.name; //takes "name" from the data object
-    console.log(cityName);
-    //$(currentWeather).append("<p>" + cityName + "<p>");
-    $(currentCity).append("<p>" + cityName + "<p>"); //attach the city's name to currentyCity container
+    let tempLevel = JSON.stringify(data.main.temp);
+    let windSpeed = JSON.stringify(data.wind.speed);
+    let humidityLevel = JSON.stringify(data.main.humidity);
 
-    console.log(data.weather); //this returns "0 {id..icon}"
-
+    //take these variables and append them to the currentWeather card as <p> elements
+    $(currentWeather).append("<p>" + cityName + "</p>");
+    $(currentWeather).append("<p>" + tempLevel + "</p>");
+    $(currentWeather).append("<p>" + windSpeed + "</p>");
+    $(currentWeather).append("<p>" + humidityLevel + "</p>");
+    
+    
     //weather icon 
     var weatherIcon = JSON.stringify(data.weather[0].icon);
     console.log(weatherIcon);
     let iconURL = new Image(); //adds image element 
     iconURL.src = "http://api.openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-    $(currentCity).append(iconURL);
+    $(currentWeather).append(iconURL);
     
-    //temperature
-    let tempLevel = JSON.stringify(data.main.temp);
-    $(currentTemp).append("<p>" + tempLevel + "<p>");
-
-    //wind speed
-    let windSpeed = JSON.stringify(data.wind.speed);
-    $(currentWind).append("<p>" + windSpeed + "<p>"); //attach wind speed to container via a p element
-
-    //humidity
-    let humidityLevel = JSON.stringify(data.main.humidity);
-   
-    $(currentHumidity).append("<p>" + humidityLevel + "<p>");
 
 };
 
