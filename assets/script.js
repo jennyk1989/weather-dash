@@ -13,7 +13,7 @@ function loadPage() {
     let searchHistory = $("#searchHistory");
     
     //local storage
-    let cityArray = [];
+    let cityHistory = [];
     
     // Open Weather API
     
@@ -40,7 +40,7 @@ function loadPage() {
                 }
             });
     };
-    
+
     function displayWeather(data) {
         //city name
         let cityName = data.name; //takes "name" from the data object
@@ -48,6 +48,7 @@ function loadPage() {
         $(currentCity).append("<p>" + cityName + "<p>"); //attach the city's name to currentyCity container
 
         console.log(data.weather); //this returns "0 {id..icon}"
+
         //weather icon 
         var weatherIcon = JSON.stringify(data.weather[0].icon);
         console.log(weatherIcon);
@@ -82,11 +83,13 @@ function loadPage() {
     $("#searchBtn").on("click", function () {
         let city = $("#city").val(); //get the city name from input field
         
-        getWeather(city); //display the current weather
+        getWeather(city); //display the current weather based on what city user entered
+
         //store searched city into local storage --> localStorage.setItem (keyName, keyValue) per MDN
         //keyName = ?, keyValue = city
-        cityArray.push(city);
-        console.log(cityArray);
+        cityHistory.push(city);
+
+        console.log(cityHistory);
         localStorage.setItem(city, cityArray);
         //localStorage.setItem("city", JSON.stringify(cityArray));
     
