@@ -1,49 +1,18 @@
 //calls every event inside the page to load before page is loaded
 
-$(document).ready(function () {
+//weather condition variables:
+let currentWeather = $("#currentWeather");
+let currentCity = $("#currentCity");
+let currentTemp = $("#currentTemp");
+let currentWind = $("#currentWind");
+let currentHumidity = $("#currentHumidity");
+let currentUV = $("#currentUV");
+//search variables
+let searchBtn = $("#searchBtn");
+let searchHistory = $("#searchHistory");
+//get out of local storage...store in array that's in addition to stored cities or in the empty array
+let cityHistory = JSON.parse(localStorage.getItem("city") || []); //parse stored data to get out of string format
     
-    //weather condition variables:
-    let currentWeather = $("#currentWeather");
-    let currentCity = $("#currentCity");
-    let currentTemp = $("#currentTemp");
-    let currentWind = $("#currentWind");
-    let currentHumidity = $("#currentHumidity");
-    let currentUV = $("#currentUV");
-    //search variables
-    let searchHistory = $("#searchHistory");
-    //get out of local storage...store in array that's in addition to stored cities or in the empty array
-    let cityHistory = JSON.parse(localStorage.getItem("city") || []); //parse stored data to get out of string format
-    
-    
-/*------------------ CLICK listener...grabs user entry and sends it to getWeather via 'city' variable ------------------*/        
-
-//add city search button eventlistener       
-
-
-
-let searchClickHandler = function(event) {
-    event.preventDefault(); //prevent page from refreshing 
-
-    let city = $("#cityInput").val(); //get the city name from input field     
-    //for each city input loop through these functions
-    getWeather(city); //send city to API to get weather 'data' 
-    
-    //send city to storage for later use 
-    cityHistory.push(city);
-    //getWeather sends 'data' from API to displayWeather
-    //weather displays
-    //remove current weather with the new click & replace it
-    console.log(city);
-    $("#city").val(""); //clear input field after it's displayed & stored
-    
-    displayHistory();
-};
-
-
-//store searched city into local storage --> localStorage.setItem (keyName, keyValue) per MDN
-//keyName = cityHistory , keyValue = value in city History
-localStorage.setItem(cityHistory, JSON.stringify(cityHistory));
-
 
 
 /*------------------ FUNCTION to get DATA from OPEN WEATHER API ------------------*/
@@ -129,7 +98,32 @@ function displayWeather(data) {
         }
     };
     
+/*------------------ CLICK listener...grabs user entry and sends it to getWeather via 'city' variable ------------------*/
 
-    let searchBtn = $("#searchBtn");
-    searchBtn.addEventListener("click", searchClickHandler);
+$(searchBtn).on("click", function(event) {  
+    event.preventDefault(); //prevent page from refreshing 
+
+    let city = $("#cityInput").val(); //get the city name from input field     
+    getWeather(city); //send city to API to get weather 'data' 
+    
+    //send city to storage for later use 
+    cityHistory.push(city);
+
+    //want to be able to store each city into this the cityHistory array
+
+    console.log(city);
+    $("#city").val(""); //clear input field after it's displayed & stored
+    
+    //store searched city into local storage --> localStorage.setItem (keyName, keyValue) per MDN
+    //keyName = cityHistory , keyValue = value in city History
+    localStorage.setItem(cityHistory, JSON.stringify(cityHistory));
+    displayHistory();
+
 });
+
+//click listener for any clicks on the cityHistory list (listofCities)
+$(document).on("click", listofCities, function () { 
+    //bring back up clicked city's weather conditions
+
+});
+
