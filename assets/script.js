@@ -16,35 +16,69 @@ let cityArray = [];
 
 // Open Weather API
 
-// API parameter = "city"
+//"city" value comes from input field 
 function getWeather (city) {
-    let apiKey = "425535dc025827a7e77aa8a4d5289d87";
+    // apiKey = "425535dc025827a7e77aa8a4d5289d87";
     let apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=425535dc025827a7e77aa8a4d5289d87";
     
     fetch(apiUrl)
         //url fetched & returned in then() method
-        .then(function(response) {
+        .then(response => {
             //if url successful:
             if (response.ok) {
                 console.log(response);
-                //json() method formats response as JSON, then captures the Promise into "data"
-                response.json().then(function(data) {
+                //take the JSON formated response & put it into "data"
+                response.json().then((data) => {
                     console.log(data);
+                    
+                    //city name
+                    let cityName = data.name; //takes "name" from the data object
+                    console.log(cityName);
+                    $(currentCity).append("<p>" + cityName + "<p>"); //attach the city's name to currentyCity container
+
+                    //weather icon 
+                    let weatherIcon = data.weather.icon;
+
+                    //temperature
+                    let tempLevel = JSON.stringify(data.main.temp);
+                    $(currentTemp).append("<p>" + tempLevel + "<p>");
+
+                    //wind speed
+                    let windSpeed = JSON.stringify(data.wind.speed);
+                    $(currentWind).append("<p>" + windSpeed + "<p>"); //attach wind speed to container via a p element
+
+                    //humidity
+                    let humidityLevel = JSON.stringify(data.main.humidity);
+                    $(currentHumidity).append("<p>" + humidityLevel + "<p>");
+
+                    //uv index
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 });
             } else {
                 alert("Error: " + response.statusText); //alerts user of "Error: " + status message from response interface
             }
         });
         
-    };
+};
 
-
-function weatherInfo (city) {
-    fetch(apiUrl)
-        
-}
-    let cityName = $('<p>').text("City: " + response.name);
-    $("#currentcity").append("<h3>" + cityName + "</h3>");
+    
 //add city search button eventlistener
 $("#searchBtn").on("click", function () {
     let city = $("#city").val(); //get the city name from input field
@@ -60,15 +94,6 @@ $("#searchBtn").on("click", function () {
     $("#city").val(""); //clear it after it's displayed & stored
 
 });
-
-//card id=currentWeather 
-/* currentCity: .name
-currentTemp: main.temp
-currentWind: wind.speed
-currentUV: ?
-icon: 
-*/
-
 
 function displayHistory() {
     //pull cityArray out of localstorage
