@@ -1,4 +1,5 @@
-function loadPage() {
+//calls every event inside the page to load before page is loaded
+$(document).ready(function () {
     //VARIABLES
     //button variables
     let searchBtn = $("#searchBtn");
@@ -12,8 +13,6 @@ function loadPage() {
     //search variables
     let searchHistory = $("#searchHistory");
     
-    //local storage
-    let cityHistory = [];
     
     // Open Weather API
     
@@ -39,94 +38,86 @@ function loadPage() {
                     alert("Error: " + response.statusText);
                 }
             });
-    };
-
-    function displayWeather(data) {
-        //city name
-        let cityName = data.name; //takes "name" from the data object
-        console.log(cityName);
-        $(currentCity).append("<p>" + cityName + "<p>"); //attach the city's name to currentyCity container
-
-        console.log(data.weather); //this returns "0 {id..icon}"
-
-        //weather icon 
-        var weatherIcon = JSON.stringify(data.weather[0].icon);
-        console.log(weatherIcon);
-        let iconURL = new Image(); //adds image element 
-        iconURL.src = "http://api.openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-        $(currentCity).append(iconURL);
-        
-
-
-        //temperature
-        let tempLevel = JSON.stringify(data.main.temp);
-        $(currentTemp).append("<p>" + tempLevel + "<p>");
-
-        //wind speed
-        let windSpeed = JSON.stringify(data.wind.speed);
-        $(currentWind).append("<p>" + windSpeed + "<p>"); //attach wind speed to container via a p element
-
-        //humidity
-        let humidityLevel = JSON.stringify(data.main.humidity);
-        $(currentHumidity).append("<p>" + humidityLevel + "<p>");
-    };
-
     
-                        //uv index
-        //********END OF FIRST FETCH *************
-           
-
+            
+        function displayWeather(data) {
+            //city name
+            let cityName = data.name; //takes "name" from the data object
+            console.log(cityName);
+            //$(currentWeather).append("<p>" + cityName + "<p>");
+            $(currentCity).append("<p>" + cityName + "<p>"); //attach the city's name to currentyCity container
+        
+            console.log(data.weather); //this returns "0 {id..icon}"
+        
+            //weather icon 
+            var weatherIcon = JSON.stringify(data.weather[0].icon);
+            console.log(weatherIcon);
+            let iconURL = new Image(); //adds image element 
+            iconURL.src = "http://api.openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+            $(currentCity).append(iconURL);
+            
+        
+        
+            //temperature
+            let tempLevel = JSON.stringify(data.main.temp);
+            //$(currentWeather).addClass("tempLevel");
+            $(currentTemp).append("<p>" + tempLevel + "<p>");
+        
+            //wind speed
+            let windSpeed = JSON.stringify(data.wind.speed);
+            //$(currentWeather).addClass("windSpeed");
+            $(currentWind).append("<p>" + windSpeed + "<p>"); //attach wind speed to container via a p element
+        
+            //humidity
+            let humidityLevel = JSON.stringify(data.main.humidity);
+            //$(currentWeather).addClass("humidityLevel");
+            $(currentHumidity).append("<p>" + humidityLevel + "<p>");
+    
+            //$(currentWeather).append(cityName,tempLevel,windSpeed,humidityLevel);
+        };
+                
+        
+    };
     /**********END OF getWeather FUNCTION**********/
+    
+    //get out of local storage...store in array that's in addition to stored cities or in the empty array
+    let cityHistory = JSON.parse(localStorage.getItem("city") || []); //parse stored data to get out of string format
     
         
     //add city search button eventlistener
     $("#searchBtn").on("click", function () {
         let city = $("#city").val(); //get the city name from input field
         
+        if (city === "") {
+            return; //prevents null from displaying first
+        }
         getWeather(city); //display the current weather based on what city user entered
-
-        //store searched city into local storage --> localStorage.setItem (keyName, keyValue) per MDN
-        //keyName = ?, keyValue = city
-        cityHistory.push(city);
-
-        console.log(cityHistory);
-        localStorage.setItem(city, cityArray);
-        //localStorage.setItem("city", JSON.stringify(cityArray));
     
-        //run these funcitons
+        //push this "city" into save keeping (cityHistory)
+        cityHistory.push(city);
         
-        displayHistory();  //function that deals with storing and displaying searched cities
+        //store searched city into local storage --> localStorage.setItem (keyName, keyValue) per MDN
+        //keyName = cityHistory , keyValue = value in city History
+        localStorage.setItem(cityHistory, JSON.stringify(cityHistory));
+        
         $("#city").val(""); //clear input field after it's displayed & stored
     
     });
     
     function displayHistory() {
-    
-        //make searched cities into an array (cityArray = []) & push each city into the array
-       
-        
-        
-    
-        //pull cityArray out of localstorage
-        let storedCities = localStorage.getItem (cityArray);
-        //let storedCities = JSON.parse(localStorage.getItem("city"));
-        console.log(storedCities);
-        console.log(cityArray);
-    
+        //empty the list first
+        $(searchHistory).empty();
         //loop through storage until all stored cities are displayed (max of 6)
-        for (let i=0; i < storedCities.length; i++) {
-            
+        for (let i=0; i < cityHistory.length; i++) {
+            //searchHistory = id of div
             //display city as a list item that links to weather of that city if clicked on
-            $(searchHistory).append("<a>" + storedCities[i] + "</a>");
-            $("a").addClass("list-item");
-            $("a").attr("apiUrl");
-    
+            let listofCities = cityHistory[i];
+            console.log(listofCities);
+            $(searchHistory).append("<a>" + listofCities + "</a>"); //append link into searchHistory container
+            $("a").addClass("list-item");//make the link display as a list item
+            
         }
     };
-    
-    
-    
+      
 
-};    
-
-loadPage();
+});
