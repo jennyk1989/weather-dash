@@ -2,6 +2,7 @@
 
 //weather condition variables:
 let currentWeather = $("#currentWeather");
+
 //search variables
 let searchBtn = $("#searchBtn");
 let listofCities = $("#listofCities");
@@ -14,7 +15,7 @@ let cityHistory = JSON.parse(localStorage.getItem("city") || []); //parse stored
 //"city" value comes from input field 
 function getWeather (city) {
     // apiKey = "425535dc025827a7e77aa8a4d5289d87";
-    let apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=425535dc025827a7e77aa8a4d5289d87";
+    let apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=425535dc025827a7e77aa8a4d5289d87";
     
     fetch(apiUrl)
         //url fetched & returned in then() method
@@ -52,14 +53,15 @@ function displayWeather(data) {
     $(currentWeather).append("<p>" + windSpeed + "</p>");
     $(currentWeather).append("<p>" + humidityLevel + "</p>");
     
-    /*
+    
     //weather icon 
-    var weatherIcon = JSON.stringify(data.weather[0].icon);
-    console.log(weatherIcon);
-    let iconURL = new Image(); //adds image element 
-    iconURL.src = "http://api.openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-    $(currentWeather).append(iconURL);
-    */
+    var weatherIconValue = data.weather[0].icon;
+    console.log(weatherIconValue);
+    let iconURL = "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
+    $(currentWeather).append($("<img>").attr("src", iconURL).attr("class", "card-img"));
+    console.log(iconURL);
+   
+    
 
 };
 
@@ -71,7 +73,7 @@ function getForecast(data) {
     let cityID = JSON.stringify(data.id); //takes out the city "id" from data 
     console.log(cityID);
     //data in city shown as .list -> array of 40 (40 days) -> [0] = day 1 of forecast
-    let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?id=" + data.id + "&appid=e0eb28e00a4488aba3663f43131eda5c";
+    let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?id=" + data.id + "&units=imperial&appid=e0eb28e00a4488aba3663f43131eda5c";
     console.log(forecastURL);
     fetch(forecastURL)
         .then(response => {
@@ -107,7 +109,30 @@ function displayForecast(forecastdata) {
     $("#castcardFive").append("<p>" + dayFiveTemp + "</p>") 
 
     //wind
+    let dayOneWind = forecastdata.list[0].wind.speed;
+    let dayTwoWind = forecastdata.list[8].wind.speed;
+    let dayThreeWind = forecastdata.list[16].wind.speed;
+    let dayFourWind= forecastdata.list[24].wind.speed;
+    let dayFiveWind = forecastdata.list[32].wind.speed;
+    
+    $("#castcardOne").append("<p>" + dayOneWind + "</p>") 
+    $("#castcardTwo").append("<p>" + dayTwoWind + "</p>") 
+    $("#castcardThree").append("<p>" + dayThreeWind + "</p>") 
+    $("#castcardFour").append("<p>" + dayFourWind + "</p>") 
+    $("#castcardFive").append("<p>" + dayFiveWind + "</p>")
 
+    //humitiy
+    let dayOneH = forecastdata.list[0].main.humidity;
+    let dayTwoH = forecastdata.list[8].main.humidity;
+    let dayThreeH = forecastdata.list[16].main.humidity;
+    let dayFourH= forecastdata.list[24].main.humidity;
+    let dayFiveH = forecastdata.list[32].main.humidity;
+    
+    $("#castcardOne").append("<p>" + dayOneH + "</p>") 
+    $("#castcardTwo").append("<p>" + dayTwoH + "</p>") 
+    $("#castcardThree").append("<p>" + dayThreeH + "</p>") 
+    $("#castcardFour").append("<p>" + dayFourH + "</p>") 
+    $("#castcardFive").append("<p>" + dayFiveH + "</p>")
 };
 
 /*---------------displays cities searched in past-----------*/
