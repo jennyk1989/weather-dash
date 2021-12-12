@@ -92,9 +92,24 @@ function getForecast(data) {
 }   
 
 function displayForecast(forecastdata) {
-    //handle forecast data here
-    // .list -> array of 40 (40 days) -> [0] = day 1 of forecast
+    console.log(forecastdata);
+    //temps 
+    let dayOneTemp = forecastdata.list[0].main.temp;
+    let dayTwoTemp = forecastdata.list[8].main.temp;
+    let dayThreeTemp = forecastdata.list[16].main.temp;
+    let dayFourTemp = forecastdata.list[24].main.temp;
+    let dayFiveTemp = forecastdata.list[32].main.temp;
+    
+    $("#castcardOne").append("<p>" + dayOneTemp + "</p>") 
+    $("#castcardTwo").append("<p>" + dayTwoTemp + "</p>") 
+    $("#castcardThree").append("<p>" + dayThreeTemp + "</p>") 
+    $("#castcardFour").append("<p>" + dayFourTemp + "</p>") 
+    $("#castcardFive").append("<p>" + dayFiveTemp + "</p>") 
+
+    //wind
+
 };
+
 /*---------------displays cities searched in past-----------*/
 function displayHistory(cityHistory) {
     console.log(cityHistory);
