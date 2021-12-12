@@ -27,6 +27,7 @@ function getWeather (city) {
                 response.json().then((data) => {
                     console.log(data);
                     displayWeather(data); //call the function that display current weather
+                    getForecast(data);
                 });
             } else {
                 //alert user that data was not fetched correctly by displayed status of the response
@@ -62,29 +63,58 @@ function displayWeather(data) {
 
 };
 
-        
-    
-    
-
-    /*---------------displays cities searched in past-----------*/
-    function displayHistory(cityHistory) {
-        console.log(cityHistory);
-        cityHistoryCard.html = "";
-        $("#cityHistoryCard").empty();
-
-        //i = 1 to get rid of "null" value that keeps showing up 
-        for (let i=1; i < cityHistory.length; i++) {
-            let cityHistoryItem = $("<a>");
-            cityHistoryItem.addClass("list-group-item");//make the link display as a list item
-            //add city name to the link
-            cityHistoryItem.text(cityHistory[i]);
-            cityHistoryItem.attr("href");
-            $("#cityHistoryCard").append(cityHistoryItem);
-            
+/*--------------- 5 day forecast --------------*/
+//api call = https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}     
+// apiKey = "425535dc025827a7e77aa8a4d5289d87";
+// daily.weather gives daily data
+function getForecast(data) {
+    let cityID = JSON.stringify(data.id); //takes out the city "id" from data 
+    console.log(cityID);
+    //data in city shown as .list -> array of 40 (40 days) -> [0] = day 1 of forecast
+    let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?id=" + data.id + "&appid=e0eb28e00a4488aba3663f43131eda5c";
+    console.log(forecastURL);
+    fetch(forecastURL)
+        .then(response => {
+            //if url successful:
+            if (response.ok) {
+            console.log(response);
+            //put repsponse as json & put into "data"
+            response.json().then((forecastdata) => {
+                console.log(forecastdata);
+                displayForecast(forecastdata);
+                
+            });
+        } else {
+            //alert user that data was not fetched correctly by displayed status of the response
+            alert("Error: " + response.statusText);
         }
-            
-        console.log(cityHistory);
-    };
+    });
+}   
+
+function displayForecast(forecastdata) {
+    //handle forecast data here
+    // .list -> array of 40 (40 days) -> [0] = day 1 of forecast
+};
+/*---------------displays cities searched in past-----------*/
+function displayHistory(cityHistory) {
+    console.log(cityHistory);
+    cityHistoryCard.html = "";
+    $("#cityHistoryCard").empty();
+
+    //i = 1 to get rid of "null" value that keeps showing up 
+    for (let i=1; i < cityHistory.length; i++) {
+        let cityHistoryItem = $("<a>");
+        cityHistoryItem.addClass("list-group-item");//make the link display as a list item
+        //add city name to the link
+        cityHistoryItem.text(cityHistory[i]);
+        cityHistoryItem.attr("href");
+        $("#cityHistoryCard").append(cityHistoryItem);
+        
+    }
+        
+    console.log(cityHistory);
+};
+
     
 /*------------------ CLICK listener...grabs user entry and sends it to getWeather via 'city' variable ------------------*/
 
