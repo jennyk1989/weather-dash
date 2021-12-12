@@ -2,7 +2,7 @@
 
 //weather condition variables:
 let currentWeather = $("#currentWeather");
-
+let fiveDay = $("#fiveDay");
 //search variables
 let searchBtn = $("#searchBtn");
 let listofCities = $("#listofCities");
@@ -16,7 +16,7 @@ let cityHistory = JSON.parse(localStorage.getItem("city") || []); //parse stored
 function getWeather (city) {
     // apiKey = "425535dc025827a7e77aa8a4d5289d87";
     let apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=425535dc025827a7e77aa8a4d5289d87";
-    
+    console.log(apiUrl);
     fetch(apiUrl)
         //url fetched & returned in then() method
         //MDN uses arrow functions in their fetch API tutorial which is why I'm using them
@@ -36,7 +36,53 @@ function getWeather (city) {
             }
         });
 };
+function getCoordinates (city) {
+    //UV Index
+    //first have to get lat & log from geocoding api
+    let coordURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=e0eb28e00a4488aba3663f43131eda5c";
+    fetch(coordURL)
+    .then(response => {
+        //if url successful:
+        if (response.ok) {
+            //put repsponse as json & put into "data"
+            response.json().then((coorddata) => {
+                getUVdata(coorddata);
+            });
+        } else {
+            //alert user that data was not fetched correctly by displayed status of the response
+            alert("Error: " + response.statusText);
+        }
+    });  
+};
 
+function getUVdata(coorddata) {
+    console.log(coorddata);
+    let uvURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coorddata[0].lat + "&lon=" + coorddata[0].lon + "&appid=e0eb28e00a4488aba3663f43131eda5c";
+    console.log(uvURL);
+    fetch(uvURL)
+    .then(response => {
+            //put repsponse as json & put into "data"
+            response.json().then((uvdata) => {
+                let uvindex = uvdata.current.uvi;
+                
+                
+                //change colors of unindex card
+                let indexcolor;
+                if (uvindex.value <= 3) {
+                    indexcolor = "green";
+                } else if (uvindex.value >= 3 || uvindex.value <= 3) {
+                    indexcolor = "yellow";
+                } else if (uvindex.value >= 6 || uvindex.vaule <= 8) {
+                    indexcolor = "orange";
+                } else {
+                    indexcolor = "red";
+                }
+                
+                $(currentWeather).append($("<div>" + "UV index: " + uvindex + "</div>").attr("class", "card").attr("style", ("background-color:" + indexcolor)));
+            });
+        
+    });  
+}
 /*------------------ FUNCTION to take 'data' from getWeather put into useable variables to display ------------------*/
 function displayWeather(data) {
     //first clear previous data (if any)
@@ -61,8 +107,8 @@ function displayWeather(data) {
     $(currentWeather).append($("<img>").attr("src", iconURL).attr("class", "card-img"));
     console.log(iconURL);
    
+    //uv index
     
-
 };
 
 /*--------------- 5 day forecast --------------*/
@@ -70,6 +116,7 @@ function displayWeather(data) {
 // apiKey = "425535dc025827a7e77aa8a4d5289d87";
 // daily.weather gives daily data
 function getForecast(data) {
+   
     let cityID = JSON.stringify(data.id); //takes out the city "id" from data 
     console.log(cityID);
     //data in city shown as .list -> array of 40 (40 days) -> [0] = day 1 of forecast
@@ -95,6 +142,16 @@ function getForecast(data) {
 
 function displayForecast(forecastdata) {
     console.log(forecastdata);
+    //first clear previous fourcast
+    $(fiveDay).empty();
+    
+    $(fiveDay).append($("<p>" + "Five Day Forecast" + "</p>").attr("class", "card-title"));
+    $(fiveDay).append($("<div>").attr("class", "card castcardOne").attr("id", "castcardOne"));
+    $(fiveDay).append($("<div>").attr("class", "card castcardTwo").attr("id", "castcardTwo"));
+    $(fiveDay).append($("<div>").attr("class", "card castcardThree").attr("id", "castcardThree"));
+    $(fiveDay).append($("<div>").attr("class", "card castcardFour").attr("id", "castcardFour"));
+    $(fiveDay).append($("<div>").attr("class", "card castcardFive").attr("id", "castcardFive"));
+    
     //temps 
     let dayOneTemp = forecastdata.list[0].main.temp;
     let dayTwoTemp = forecastdata.list[8].main.temp;
@@ -169,6 +226,7 @@ $(searchBtn).on("click", function(event) {
     }
 
     getWeather(city); //send city to API to get weather 'data' 
+    getCoordinates(city);
     
     //send city to storage for later use 
     cityHistory.push(city);
