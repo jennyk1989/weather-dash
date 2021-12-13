@@ -2,7 +2,15 @@
 
 //weather condition variables:
 let currentWeather = $("#currentWeather");
+let cityDateIcon = $("#cityDateIcon");
+let cityNameColumn = $("#cityNameColumn")
+let weatherIcon = $("#weatherIcon")
+let dateDiv = $("#dateDiv")
+let weatherValues = $("#weatherValues");
+let uvCard = $("#uvCard");
 let fiveDay = $("#fiveDay");
+let fiveDayTitle = $("#fiveDaytitle");
+let fiveDayCards = $("#fiveDayCards");
 //search variables
 let searchBtn = $("#searchBtn");
 let listofCities = $("#listofCities");
@@ -36,6 +44,42 @@ function getWeather (city) {
             }
         });
 };
+/*------------------ FUNCTION to take 'data' from getWeather put into useable variables to display ------------------*/
+function displayWeather(data) {
+    //==========city icon date ==================
+    $(cityDateIcon).empty();
+    //city
+    let cityName = data.name; //takes "name" from the data object
+    $(cityDateIcon).append("<p>" + cityName + "</p>").attr("class", "col-6");
+    
+    //date
+    let currentDate = moment().format("dddd, MMM, Do, YYYY")
+    $(cityDateIcon).append("<p>" + currentDate + "</p>").attr("class", "col-4");
+
+    //icon
+    let iconURL = "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
+    $(cityDateIcon).append($("<img>").attr("src", iconURL).attr("class", "btn"));
+
+    
+
+    //=============weather values card ================/
+    $(weatherValues).empty();
+    //variables to handles the city-specific data coming from the API
+    let tempLevel = JSON.stringify(data.main.temp);
+    let windSpeed = JSON.stringify(data.wind.speed);
+    let humidityLevel = JSON.stringify(data.main.humidity);
+
+    //take these variables and append them to the weather values card as <p> elements
+    $(weatherValues).append("<p>" + "Temp: " + tempLevel + "&deg" + "F" + "</p>");
+    $(weatherValues).append("<p>" + "Wind: " + windSpeed + " MPH" + "</p>");
+    $(weatherValues).append("<p>" + "Humidity: " + humidityLevel + " %" + "</p>");
+    
+    //=============uv index===========/
+    //uv index -> displayed by getUVdata funciton
+    
+};
+
+//function to get coordinates required by API to get UV Index
 function getCoordinates (city) {
     //UV Index
     //first have to get lat & log from geocoding api
@@ -56,9 +100,9 @@ function getCoordinates (city) {
 };
 
 function getUVdata(coorddata) {
-    console.log(coorddata);
+    
     let uvURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coorddata[0].lat + "&lon=" + coorddata[0].lon + "&appid=e0eb28e00a4488aba3663f43131eda5c";
-    console.log(uvURL);
+    
     fetch(uvURL)
     .then(response => {
             //put repsponse as json & put into "data"
@@ -66,50 +110,24 @@ function getUVdata(coorddata) {
                 let uvindex = uvdata.current.uvi;
                 
                 
-                //change colors of unindex card
+                //change colors of uvindex card
                 let indexcolor;
-                if (uvindex.value <= 3) {
-                    indexcolor = "green";
-                } else if (uvindex.value >= 3 || uvindex.value <= 3) {
-                    indexcolor = "yellow";
-                } else if (uvindex.value >= 6 || uvindex.vaule <= 8) {
-                    indexcolor = "orange";
-                } else {
+                if (uvindex > 5) {
                     indexcolor = "red";
-                }
-                
-                $(currentWeather).append($("<div>" + "UV index: " + uvindex + "</div>").attr("class", "card").attr("style", ("background-color:" + indexcolor)));
+                } else if (uvindex > 2 && uvindex < 6) {
+                    indexcolor = "yellow";
+                } else {
+                    indexcolor = "green";
+                };
+                //=============uv index===========/
+                $(uvCard).empty();
+                $(uvCard).append($("<div>" + "UV Index: " + uvindex + "</div>").attr("class", "card").attr("style", ("background-color:" + indexcolor))
+                .attr("class", "text-white"));
             });
         
     });  
 }
-/*------------------ FUNCTION to take 'data' from getWeather put into useable variables to display ------------------*/
-function displayWeather(data) {
-    //first clear previous data (if any)
-    $(currentWeather).empty(); 
-    //variables to handles the city-specific data coming from the API
-    let cityName = data.name; //takes "name" from the data object
-    let tempLevel = JSON.stringify(data.main.temp);
-    let windSpeed = JSON.stringify(data.wind.speed);
-    let humidityLevel = JSON.stringify(data.main.humidity);
 
-    //take these variables and append them to the currentWeather card as <p> elements
-    $(currentWeather).append("<p>" + cityName + "</p>");
-    $(currentWeather).append("<p>" + tempLevel + "</p>");
-    $(currentWeather).append("<p>" + windSpeed + "</p>");
-    $(currentWeather).append("<p>" + humidityLevel + "</p>");
-    
-    
-    //weather icon 
-    var weatherIconValue = data.weather[0].icon;
-    console.log(weatherIconValue);
-    let iconURL = "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
-    $(currentWeather).append($("<img>").attr("src", iconURL).attr("class", "card-img"));
-    console.log(iconURL);
-   
-    //uv index
-    
-};
 
 /*--------------- 5 day forecast --------------*/
 //api call = https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}     
@@ -143,15 +161,60 @@ function getForecast(data) {
 function displayForecast(forecastdata) {
     console.log(forecastdata);
     //first clear previous fourcast
-    $(fiveDay).empty();
+    $(fiveDayTitle).empty();
+    $(fiveDayCards).empty();
     
-    $(fiveDay).append($("<p>" + "Five Day Forecast" + "</p>").attr("class", "card-title"));
-    $(fiveDay).append($("<div>").attr("class", "card castcardOne").attr("id", "castcardOne"));
-    $(fiveDay).append($("<div>").attr("class", "card castcardTwo").attr("id", "castcardTwo"));
-    $(fiveDay).append($("<div>").attr("class", "card castcardThree").attr("id", "castcardThree"));
-    $(fiveDay).append($("<div>").attr("class", "card castcardFour").attr("id", "castcardFour"));
-    $(fiveDay).append($("<div>").attr("class", "card castcardFive").attr("id", "castcardFive"));
+    $(fiveDayTitle).append($("<p>" + "Five Day Forecast" + "</p>").attr("class", "card-title"));
+    $(fiveDayCards).append($("<div>").attr("class", "card castcardOne").attr("id", "castcardOne"));
+    $(fiveDayCards).append($("<div>").attr("class", "card castcardTwo").attr("id", "castcardTwo"));
+    $(fiveDayCards).append($("<div>").attr("class", "card castcardThree").attr("id", "castcardThree"));
+    $(fiveDayCards).append($("<div>").attr("class", "card castcardFour").attr("id", "castcardFour"));
+    $(fiveDayCards).append($("<div>").attr("class", "card castcardFive").attr("id", "castcardFive"));
     
+    //dates
+    //day 1
+    let dayOneUnix= ((forecastdata.list[0].dt)*1000); //give me time in UNIX
+    const dateOneObject = new Date(dayOneUnix)
+    const dateOneFormat = dateOneObject.toLocaleString();
+    const splicedDateOne = dateOneFormat.substring(0,10); //cuts out time part 
+    //day 2
+    let dayTwoUnix= ((forecastdata.list[8].dt)*1000); //give me time in UNIX
+    const dateTwoObject = new Date(dayTwoUnix)
+    const dateTwoFormat = dateTwoObject.toLocaleString(); //converts date into a string
+    const splicedDateTwo = dateTwoFormat.substring(0,10); //cuts out time part 
+    //day 3
+    let dayThreeUnix= ((forecastdata.list[16].dt)*1000); //give me time in UNIX
+    const dateThreeObject = new Date(dayThreeUnix)
+    const dateThreeFormat = dateThreeObject.toLocaleString();
+    const splicedDateThree = dateThreeFormat.substring(0,10); //cuts out time part 
+
+    let dayFourUnix= new Date((forecastdata.list[24].dt)*1000); //give me time in UNIX
+    const dateFourFormat = dayFourUnix.toLocaleString();
+    const splicedDateFour = dateFourFormat.substring(0,10); //cuts out time part 
+
+    let dayFiveUnix= new Date((forecastdata.list[32].dt)*1000); //give me time in UNIX
+    const dateFiveFormat = dayFiveUnix.toLocaleString();
+    const splicedDateFive = dateFiveFormat.substring(0,10); //cuts out time part 
+
+    
+    $("#castcardOne").append("<p>" + splicedDateOne + "</p>") 
+    $("#castcardTwo").append("<p>" + splicedDateTwo + "</p>") 
+    $("#castcardThree").append("<p>" + splicedDateThree + "</p>") 
+    $("#castcardFour").append("<p>" + splicedDateFour + "</p>") 
+    $("#castcardFive").append("<p>" + splicedDateFive + "</p>") 
+    
+    //icons
+    let iconURLONE = "https://openweathermap.org/img/wn/" + forecastdata.list[0].weather[0].icon + ".png";
+    $("#castcardOne").append($("<img>").attr("src", iconURLONE).attr("class", "btn w-25"));
+    let iconURLTwo = "https://openweathermap.org/img/wn/" + forecastdata.list[8].weather[0].icon + ".png";
+    $("#castcardTwo").append($("<img>").attr("src", iconURLTwo).attr("class", "btn w-25"));
+    let iconURLThree = "https://openweathermap.org/img/wn/" + forecastdata.list[16].weather[0].icon + ".png";
+    $("#castcardThree").append($("<img>").attr("src", iconURLThree).attr("class", "btn w-25"));
+    let iconURLFour = "https://openweathermap.org/img/wn/" + forecastdata.list[24].weather[0].icon + ".png";
+    $("#castcardFour").append($("<img>").attr("src", iconURLFour).attr("class", "btn w-25"));
+    let iconURLFive = "https://openweathermap.org/img/wn/" + forecastdata.list[32].weather[0].icon + ".png";
+    $("#castcardFive").append($("<img>").attr("src", iconURLFive).attr("class", "btn w-25"));
+
     //temps 
     let dayOneTemp = forecastdata.list[0].main.temp;
     let dayTwoTemp = forecastdata.list[8].main.temp;
@@ -159,11 +222,11 @@ function displayForecast(forecastdata) {
     let dayFourTemp = forecastdata.list[24].main.temp;
     let dayFiveTemp = forecastdata.list[32].main.temp;
     
-    $("#castcardOne").append("<p>" + dayOneTemp + "</p>") 
-    $("#castcardTwo").append("<p>" + dayTwoTemp + "</p>") 
-    $("#castcardThree").append("<p>" + dayThreeTemp + "</p>") 
-    $("#castcardFour").append("<p>" + dayFourTemp + "</p>") 
-    $("#castcardFive").append("<p>" + dayFiveTemp + "</p>") 
+    $("#castcardOne").append("<p>" + "Temp: " + dayOneTemp + "&deg" + "F" + "</p>") 
+    $("#castcardTwo").append("<p>" + "Temp: " + dayTwoTemp + "&deg" + "F" + "</p>") 
+    $("#castcardThree").append("<p>" + "Temp: " + dayThreeTemp + "&deg" + "F" + "</p>") 
+    $("#castcardFour").append("<p>" + "Temp: " + dayFourTemp + "&deg" + "F" + "</p>") 
+    $("#castcardFive").append("<p>" + "Temp: " + dayFiveTemp + "&deg" + "F" + "</p>") 
 
     //wind
     let dayOneWind = forecastdata.list[0].wind.speed;
@@ -172,11 +235,11 @@ function displayForecast(forecastdata) {
     let dayFourWind= forecastdata.list[24].wind.speed;
     let dayFiveWind = forecastdata.list[32].wind.speed;
     
-    $("#castcardOne").append("<p>" + dayOneWind + "</p>") 
-    $("#castcardTwo").append("<p>" + dayTwoWind + "</p>") 
-    $("#castcardThree").append("<p>" + dayThreeWind + "</p>") 
-    $("#castcardFour").append("<p>" + dayFourWind + "</p>") 
-    $("#castcardFive").append("<p>" + dayFiveWind + "</p>")
+    $("#castcardOne").append("<p>" + "Wind: " + dayOneWind + " MPH" + "</p>") 
+    $("#castcardTwo").append("<p>" + "Wind: " + dayTwoWind + " MPH" + "</p>") 
+    $("#castcardThree").append("<p>" + "Wind: " + dayThreeWind + " MPH" + "</p>") 
+    $("#castcardFour").append("<p>" + "Wind: " + dayFourWind + " MPH" + "</p>") 
+    $("#castcardFive").append("<p>" + "Wind: " + dayFiveWind + " MPH" + "</p>")
 
     //humitiy
     let dayOneH = forecastdata.list[0].main.humidity;
@@ -185,11 +248,11 @@ function displayForecast(forecastdata) {
     let dayFourH= forecastdata.list[24].main.humidity;
     let dayFiveH = forecastdata.list[32].main.humidity;
     
-    $("#castcardOne").append("<p>" + dayOneH + "</p>") 
-    $("#castcardTwo").append("<p>" + dayTwoH + "</p>") 
-    $("#castcardThree").append("<p>" + dayThreeH + "</p>") 
-    $("#castcardFour").append("<p>" + dayFourH + "</p>") 
-    $("#castcardFive").append("<p>" + dayFiveH + "</p>")
+    $("#castcardOne").append("<p>" + "Humidity: " + dayOneH + " %" + "</p>") 
+    $("#castcardTwo").append("<p>" + "Humidity: " + dayTwoH + " %" + "</p>") 
+    $("#castcardThree").append("<p>" + "Humidity: " + dayThreeH + " %" + "</p>") 
+    $("#castcardFour").append("<p>" + "Humidity: " + dayFourH + " %" + "</p>") 
+    $("#castcardFive").append("<p>" + "Humidity: " + dayFiveH + " %" + "</p>")
 };
 
 /*---------------displays cities searched in past-----------*/

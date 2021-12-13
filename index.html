@@ -13,12 +13,12 @@
 <body>
     <!-- weather dashboard jumbotron -->
     <div class="jumbotron jumbotron-fluid bg-primary">
-        <p class=" text-white text-center"> Weather Dashboard of Torture </p>
+        <p class="h1 text-white text-center"> Weather Dashboard </p>
     </div>
     <!-- large container to contain it all -->
-    <div class="container-fluid border border-primary">
+    <div class="container-fluid border border-primary ">
         <!-- container for left side & right side of page -->
-        <div class="row">
+        <div class="row mh-100">
             <!-- city search and quicklinks -->
             <div class="col-4">
                 <!-- city search -->
@@ -45,18 +45,30 @@
                     </div>
                 </div>
             </div>
-            <!-- weather results + 5 day forecast -->
-            <div class="col-8">
+        <!--*************** weather results + 5 day forecast *****************-->
+            <div class="col-8 border border-dark">
                 <!--********** current weather **********-->
-                <div class="card col-12" id="currentWeather">
+                <div class="card col-12 mh-50" id="currentWeather">
                     <!-- append current weather here -->
-                    <div class="card"">
-                        Eventual placeholder
+                    <div class="card" id= "cityDateIcon">
+                       
                     </div>
+                    <div class="card" id="weatherValues">
+                        
+                    </div>
+                    <div class="card" id="uvCard">
+                        
+                    </div>
+                    
                 </div>
                 <!--********** 5 day forecast **********-->
-                <div class="card col-12" id="fiveDay">
-                    Eventual Placeholder
+                <div class="card col-12 mh-50" id="fiveDay">
+                    <div id="fiveDaytitle">
+
+                    </div>
+                    <div id="fiveDayCards">
+
+                    </div>
                 </div>
             </div>
         </div>
