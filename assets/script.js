@@ -1,13 +1,13 @@
 //calls every event inside the page to load before page is loaded
 
 //weather condition variables:
-let currentWeather = $("#currentWeather");
-let cityDateIcon = $("#cityDateIcon");
+let currentWeather = $("#current-weather");
+let cityDateIcon = $("city-date-icon");
 let cityNameColumn = $("#cityNameColumn")
 let weatherIcon = $("#weatherIcon")
 let dateDiv = $("#dateDiv")
-let weatherValues = $("#weatherValues");
-let uvCard = $("#uvCard");
+let weatherValues = $("#weather-values");
+let uvDiv = $("#uv-div");
 let fiveDay = $("#fiveDay");
 let fiveDayTitle = $("#fiveDaytitle");
 let fiveDayCards = $("#fiveDayCards");
@@ -120,8 +120,8 @@ function getUVdata(coorddata) {
                     indexcolor = "green";
                 };
                 //=============uv index===========/
-                $(uvCard).empty();
-                $(uvCard).append($("<div>" + "UV Index: " + uvindex + "</div>").attr("class", "card").attr("style", ("background-color:" + indexcolor))
+                $(uvDiv).empty();
+                $(uvDiv).append($("<div>" + "UV Index: " + uvindex + "</div>").attr("class", "card").attr("style", ("background-color:" + indexcolor))
                 .attr("class", "text-white"));
             });
         

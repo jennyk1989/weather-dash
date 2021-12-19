@@ -24,7 +24,7 @@
             <!-- container for left side & right side of page -->
             <div class="columns">
                 <!-- city search and quicklinks -->
-                <nav class="column is-4 is-outlined">
+                <nav class="column is-3 is-outlined">
                     <!-- city search -->
                     <div class="panel is-info">
                         <!-- header -->
@@ -58,20 +58,30 @@
                     </div>
                 </nav>
             <!--*************** weather results + 5 day forecast *****************-->
-                <div class="column is-8 border border-dark">
+                <div class="column is-9 is-outlined">
                     <!--********** current weather **********-->
-                    <div class="card col-12 mh-50" id="currentWeather">
+                    <div class="content is-large">
+                        <!-- <h3 class="title"> Current Weather </h3> -->
                         <!-- append current weather here -->
-                        <div class="card" id= "cityDateIcon">
-                           
+                        <div class="box"  id="current-weather">
+                            <p class="has-text-info" id="startup-text"> Current Weather</p>
+                            <article class="message is-info">
+                                <div class="mesage-header">
+                                    <!-- dynamically insert city name here -->
+                                    city name
+                                </div>
+                                <div class="message-body">
+                                    <!-- dynamically insert weather data here -->
+                                    <p id="city-date-icon">city date icon</p>
+                                    <div id="weather-values">
+                                        weather values
+                                    </div>
+                                    <div id="uv-div">
+                                        uv data
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                        <div class="card" id="weatherValues">
-                            
-                        </div>
-                        <div class="card" id="uvCard">
-                            
-                        </div>
-                        
                     </div>
                     <!--********** 5 day forecast **********-->
                     <div class="card col-12 mh-50" id="fiveDay">
