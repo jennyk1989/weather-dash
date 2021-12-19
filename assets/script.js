@@ -8,12 +8,11 @@ let weatherIcon = $("#weatherIcon")
 let dateDiv = $("#dateDiv")
 let weatherValues = $("#weather-values");
 let uvDiv = $("#uv-div");
-let fiveDay = $("#fiveDay");
-let fiveDayTitle = $("#fiveDaytitle");
-let fiveDayCards = $("#fiveDayCards");
+let fiveDay = $("#five-day");
+let fiveDayTitle = $("#five-day-title");
+let fiveDayCards = $("#five-day-cards");
 //search variables
 let searchBtn = $("#search-button");
-let listofCities = $("#listofCities");
 //get out of local storage...store in array that's in addition to stored cities or in the empty array
 let cityHistory = JSON.parse(localStorage.getItem("city")) || []; //parse stored data to get out of string format
     
