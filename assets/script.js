@@ -15,7 +15,7 @@ let fiveDayCards = $("#fiveDayCards");
 let searchBtn = $("#searchBtn");
 let listofCities = $("#listofCities");
 //get out of local storage...store in array that's in addition to stored cities or in the empty array
-let cityHistory = JSON.parse(localStorage.getItem("city") || []); //parse stored data to get out of string format
+let cityHistory = JSON.parse(localStorage.getItem("city")) || []; //parse stored data to get out of string format
     
 
 
