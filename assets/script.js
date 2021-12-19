@@ -1,27 +1,11 @@
-//calls every event inside the page to load before page is loaded
-
-//weather condition variables:
-let currentWeather = $("#current-weather");
-let cityDateIcon = $("city-date-icon");
-let cityNameColumn = $("#cityNameColumn")
-let weatherIcon = $("#weatherIcon")
-let dateDiv = $("#dateDiv")
-let weatherValues = $("#weather-values");
-let uvDiv = $("#uv-div");
-let fiveDay = $("#five-day");
-let fiveDayTitle = $("#five-day-title");
-let fiveDayCards = $("#five-day-cards");
-//search variables
+//variables
 let searchBtn = $("#search-button");
 //get out of local storage...store in array that's in addition to stored cities or in the empty array
 let cityHistory = JSON.parse(localStorage.getItem("city")) || []; //parse stored data to get out of string format
-    
-
 
 /*------------------ FUNCTION to get DATA from OPEN WEATHER API ------------------*/
 //"city" value comes from input field 
 function getWeather (city) {
-    // apiKey = "425535dc025827a7e77aa8a4d5289d87";
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=425535dc025827a7e77aa8a4d5289d87";
     console.log(apiUrl);
     fetch(apiUrl)
@@ -44,24 +28,34 @@ function getWeather (city) {
         });
 };
 /*------------------ FUNCTION to take 'data' from getWeather put into useable variables to display ------------------*/
+//relevant variables
+const cityName = $("#city-name");
+const cityDateIcon = $("#city-date-icon");
+const cityDate = $("#city-date");
+const weatherIcon = $("#weather-icon")
+const dateDiv = $("#dateDiv")
+const weatherValues = $("#weather-values");
+const uvDiv = $("#uv-div");
+
 function displayWeather(data) {
-    //==========city icon date ==================
-    $(cityDateIcon).empty();
+    //========== city icon date ==================
+    $(cityName).empty();
+    $(cityDate).empty();
+    $(uvDiv).empty();
+    $("#hide-me").hide();
     //city
-    let cityName = data.name; //takes "name" from the data object
-    $(cityDateIcon).append("<p>" + cityName + "</p>").attr("class", "col-6");
+    $(cityName).append("<p>" + data.name + "</p>");
+   
     
     //date
-    let currentDate = moment().format("dddd, MMM, Do, YYYY")
-    $(cityDateIcon).append("<p>" + currentDate + "</p>").attr("class", "col-4");
+    let currentDate = moment().format("dddd, MMM, Do, YYYY");
+    $(cityDate).append("<p>" + currentDate + "</p>");
 
     //icon
     let iconURL = "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
-    $(cityDateIcon).append($("<img>").attr("src", iconURL).attr("class", "btn"));
+    $(weatherIcon).append($("<img>").attr("src", iconURL));
 
-    
-
-    //=============weather values card ================/
+    //============= weather values ================/
     $(weatherValues).empty();
     //variables to handles the city-specific data coming from the API
     let tempLevel = JSON.stringify(data.main.temp);
@@ -80,7 +74,6 @@ function displayWeather(data) {
 
 //function to get coordinates required by API to get UV Index
 function getCoordinates (city) {
-    //UV Index
     //first have to get lat & log from geocoding api
     let coordURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=e0eb28e00a4488aba3663f43131eda5c";
     fetch(coordURL)
@@ -108,7 +101,6 @@ function getUVdata(coorddata) {
             response.json().then((uvdata) => {
                 let uvindex = uvdata.current.uvi;
                 
-                
                 //change colors of uvindex card
                 let indexcolor;
                 if (uvindex > 5) {
@@ -129,9 +121,6 @@ function getUVdata(coorddata) {
 
 
 /*--------------- 5 day forecast --------------*/
-//api call = https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}     
-// apiKey = "425535dc025827a7e77aa8a4d5289d87";
-// daily.weather gives daily data
 function getForecast(data) {
    
     let cityID = JSON.stringify(data.id); //takes out the city "id" from data 

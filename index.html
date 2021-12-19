@@ -65,19 +65,24 @@
                         <!-- append current weather here -->
                         <div class="box"  id="current-weather">
                             <p class="has-text-info"> Current Weather</p>
-                            <article class="message is-info">
-                                <div class="mesage-header">
+                            <article class="message is-dark">
+                                <div class="mesage-header" id="city-name">
                                     <!-- dynamically insert city name here -->
-                                    city name
                                 </div>
-                                <div class="message-body">
+                                <div class="message-body" id="city-date-icon">
+                                    <p id="hide-me">
+                                        Search for a city to see it's current weather data
+                                    </p>
                                     <!-- dynamically insert weather data here -->
-                                    <p id="city-date-icon">city date icon</p>
+                                    <div id="city-date">
+                                        <!-- city's data and weather icon insert here -->
+                                        <icon id="weather-icon"> </icon>
+                                    </div>
                                     <div id="weather-values">
-                                        weather values
+                                        <!-- weather values insert here -->
                                     </div>
                                     <div id="uv-div">
-                                        uv data
+                                        <!-- uv data inserts here -->
                                     </div>
                                 </div>
                             </article>
@@ -87,7 +92,7 @@
                     <div class="content is-large">
                         <div class="box">
                             <p class="has-text-info">5-Day Forecast</p>
-                            <article class="columns">
+                            <article class="columns is-flex-wrap-wrap">
                                 <!-- Day 1 Forecast -->
                                 <div class="column">
                                     <div class="card" id="five-day-one">
