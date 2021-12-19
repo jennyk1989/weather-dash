@@ -23,7 +23,7 @@ let cityHistory = JSON.parse(localStorage.getItem("city")) || []; //parse stored
 //"city" value comes from input field 
 function getWeather (city) {
     // apiKey = "425535dc025827a7e77aa8a4d5289d87";
-    let apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=425535dc025827a7e77aa8a4d5289d87";
+    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=425535dc025827a7e77aa8a4d5289d87";
     console.log(apiUrl);
     fetch(apiUrl)
         //url fetched & returned in then() method
@@ -83,7 +83,7 @@ function displayWeather(data) {
 function getCoordinates (city) {
     //UV Index
     //first have to get lat & log from geocoding api
-    let coordURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=e0eb28e00a4488aba3663f43131eda5c";
+    let coordURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=e0eb28e00a4488aba3663f43131eda5c";
     fetch(coordURL)
     .then(response => {
         //if url successful:
@@ -138,7 +138,7 @@ function getForecast(data) {
     let cityID = JSON.stringify(data.id); //takes out the city "id" from data 
     console.log(cityID);
     //data in city shown as .list -> array of 40 (40 days) -> [0] = day 1 of forecast
-    let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?id=" + data.id + "&units=imperial&appid=e0eb28e00a4488aba3663f43131eda5c";
+    let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + data.id + "&units=imperial&appid=e0eb28e00a4488aba3663f43131eda5c";
     console.log(forecastURL);
     fetch(forecastURL)
         .then(response => {
