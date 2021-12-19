@@ -258,8 +258,8 @@ function displayForecast(forecastdata) {
 /*---------------displays cities searched in past-----------*/
 function displayHistory(cityHistory) {
     console.log(cityHistory);
-    cityHistoryCard.html = "";
-    $("#cityHistoryCard").empty();
+    $("#city-history-card").html = "";
+    $("#city-history-card").empty();
 
     //i = 1 to get rid of "null" value that keeps showing up 
     for (let i=1; i < cityHistory.length; i++) {
@@ -268,7 +268,7 @@ function displayHistory(cityHistory) {
         //add city name to the link
         cityHistoryItem.text(cityHistory[i]);
         cityHistoryItem.attr("href");
-        $("#cityHistoryCard").append(cityHistoryItem);
+        $("#city-history-card").append(cityHistoryItem);
         
     }
         
@@ -307,7 +307,7 @@ $(searchBtn).on("click", function(event) {
 });
 
 //click listener for any clicks on the cityHistory list 
-$("#cityHistoryCard").on("click", ".list-group-item", function () { 
+$("#city-history-card").on("click", ".list-group-item", function () { 
     //bring back up clicked city's weather conditions
     //define variable to hold city's name
     var searchedCity = $(this).text(); //export city's name as text

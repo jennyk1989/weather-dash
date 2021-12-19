@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link rel="stylesheet" src="assets/style.css">
@@ -24,32 +24,39 @@
             <!-- container for left side & right side of page -->
             <div class="columns">
                 <!-- city search and quicklinks -->
-                <form class="column is-4 is-outlined">
+                <nav class="column is-4 is-outlined">
                     <!-- city search -->
-                    <div class="field" id="citySearch">
+                    <div class="panel is-info">
                         <!-- header -->
-                        <label class="menu-label">Search for a City:</label>
+                        <div class="panel-heading">Search for a City:</div>
                         <!-- input field -->
-                        <div class="control block">
-                            <div class="block">
-                                <input class="input" type="text" id="city-input" placeholder="city name" autofocus="true">
-                            </div>
+                        <div class="panel-block">
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" id="city-input" placeholder="Search City" autofocus="true">
+                                <!-- font awesome search icon -->
+                                <span class="icon is-left">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="panel-block">
                             <!-- search button -->
-                            <button class="button is-info" type="submit" id="search-button">
+                            <button class="button is-info is-fullwidth" type="submit" id="search-button">
                                 Search                    
                             </button>
+
                         </div>
                     </div>
                     <!-- city quicklinks -->
-                    <div class="card" >
-                        <div class="card-header">
-                            Searches: 
-                        </div>
-                        <div class="list-group" id="cityHistoryCard">
+                    <div class="panel is-info" >
+                        <p class="panel-heading">
+                            Search History
+                        </p>
+                        <a class="panel-block is-active" id="#city-history-card">
                             <!-- append city names here -->
-                        </div>
+                        </a>
                     </div>
-                </form>
+                </nav>
             <!--*************** weather results + 5 day forecast *****************-->
                 <div class="column is-8 border border-dark">
                     <!--********** current weather **********-->
