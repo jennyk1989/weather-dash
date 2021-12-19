@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
@@ -11,68 +12,73 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    <!-- weather dashboard jumbotron -->
-    <div class="jumbotron jumbotron-fluid bg-primary">
-        <p class="h1 text-white text-center"> Weather Dashboard </p>
+    <!-- weather dashboard hero -->
+    <div class="hero is-info">
+        <div class="hero-body">
+            <p class="title has-text-centered"> Weather Dashboard </p>
+        </div>
     </div>
     <!-- large container to contain it all -->
-    <div class="container-fluid border border-primary ">
-        <!-- container for left side & right side of page -->
-        <div class="row mh-100">
-            <!-- city search and quicklinks -->
-            <div class="col-4">
-                <!-- city search -->
-                <div class="card" id="citySearch">
-                    <!-- header -->
-                    <h3 class="card-header">Search for a City:</h3>
-                    <!-- input field -->
-                    <div class="input-group mb-3">
-                        <input type="text" id="cityInput" class="form-control" placeholder="type city name" aria-label="Username" aria-describedby="basic-addon1">
+    <main class=section is-large">
+        <div class="container">
+            <!-- container for left side & right side of page -->
+            <div class="columns">
+                <!-- city search and quicklinks -->
+                <form class="column is-4 is-outlined">
+                    <!-- city search -->
+                    <div class="field" id="citySearch">
+                        <!-- header -->
+                        <label class="menu-label">Search for a City:</label>
+                        <!-- input field -->
+                        <div class="control block">
+                            <div class="block">
+                                <input class="input" type="text" id="city-input" placeholder="city name" autofocus="true">
+                            </div>
+                            <!-- search button -->
+                            <button class="button is-info" type="submit" id="search-button">
+                                Search                    
+                            </button>
+                        </div>
                     </div>
-                    <!-- search button -->
-                    <button class="btn btn-outline-secondary bg-primary text-white" type="submit" id="searchBtn">
-                        Search                    
-                    </button>
+                    <!-- city quicklinks -->
+                    <div class="card" >
+                        <div class="card-header">
+                            Searches: 
+                        </div>
+                        <div class="list-group" id="cityHistoryCard">
+                            <!-- append city names here -->
+                        </div>
+                    </div>
+                </form>
+            <!--*************** weather results + 5 day forecast *****************-->
+                <div class="column is-8 border border-dark">
+                    <!--********** current weather **********-->
+                    <div class="card col-12 mh-50" id="currentWeather">
+                        <!-- append current weather here -->
+                        <div class="card" id= "cityDateIcon">
+                           
+                        </div>
+                        <div class="card" id="weatherValues">
+                            
+                        </div>
+                        <div class="card" id="uvCard">
+                            
+                        </div>
+                        
+                    </div>
+                    <!--********** 5 day forecast **********-->
+                    <div class="card col-12 mh-50" id="fiveDay">
+                        <div id="fiveDaytitle">
     
-                </div>
-                <!-- city quicklinks -->
-                <div class="card" >
-                    <div class="card-header">
-                        Searches: 
-                    </div>
-                    <div class="list-group" id="cityHistoryCard">
-                        <!-- append city names here -->
-                    </div>
-                </div>
-            </div>
-        <!--*************** weather results + 5 day forecast *****************-->
-            <div class="col-8 border border-dark">
-                <!--********** current weather **********-->
-                <div class="card col-12 mh-50" id="currentWeather">
-                    <!-- append current weather here -->
-                    <div class="card" id= "cityDateIcon">
-                       
-                    </div>
-                    <div class="card" id="weatherValues">
-                        
-                    </div>
-                    <div class="card" id="uvCard">
-                        
-                    </div>
-                    
-                </div>
-                <!--********** 5 day forecast **********-->
-                <div class="card col-12 mh-50" id="fiveDay">
-                    <div id="fiveDaytitle">
-
-                    </div>
-                    <div id="fiveDayCards">
-
+                        </div>
+                        <div id="fiveDayCards">
+    
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     
     
     <!-- jquery + js -->

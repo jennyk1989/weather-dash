@@ -12,7 +12,7 @@ let fiveDay = $("#fiveDay");
 let fiveDayTitle = $("#fiveDaytitle");
 let fiveDayCards = $("#fiveDayCards");
 //search variables
-let searchBtn = $("#searchBtn");
+let searchBtn = $("#search-button");
 let listofCities = $("#listofCities");
 //get out of local storage...store in array that's in addition to stored cities or in the empty array
 let cityHistory = JSON.parse(localStorage.getItem("city")) || []; //parse stored data to get out of string format
@@ -281,7 +281,7 @@ function displayHistory(cityHistory) {
 $(searchBtn).on("click", function(event) {  
     event.preventDefault(); //prevent page from refreshing 
 
-    let city = $("#cityInput").val(); //get the city name from input field
+    let city = $("#city-input").val(); //get the city name from input field
     
     //if city input is empty, do nothing
     if (city === "") {
