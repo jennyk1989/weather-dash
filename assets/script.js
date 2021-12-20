@@ -227,9 +227,6 @@ function displayForecast(forecastdata) {
 };
 
 /*---------------displays cities searched in past-----------*/
-//relavent variables
-const historyPanel = $("#history-panel");
-
 function displayHistory(cityHistory) {
     console.log(cityHistory);
     //$("#history-panel").html = "";
@@ -237,13 +234,10 @@ function displayHistory(cityHistory) {
 
     //i = 1 to get rid of "null" value that keeps showing up 
     for (let i=1; i < cityHistory.length; i++) {
-        let cityHistoryItem = $("<a>");
-        cityHistoryItem.addClass("panel-block");//make the link display as a panel-block
-        //add city name to the link
-        cityHistoryItem.text(cityHistory[i]);
-        cityHistoryItem.attr("href");
-        $(historyPanel).append(cityHistoryItem);
-        
+        let historyDiv = $("<div>").addClass("panel-block");
+        $("#history-panel").append(historyDiv);
+        let historyButton = $("<button>" + cityHistory[i] + "</button>").addClass("button is-info is-fullwidth");
+        $(historyDiv).append(historyButton);
     }
         
     console.log(cityHistory);
