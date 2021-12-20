@@ -149,17 +149,13 @@ function getForecast(data) {
 
 function displayForecast(forecastdata) {
     console.log(forecastdata);
-    //first clear previous fourcast
+    //first clear previous dates
     $("#day-one").empty();
-    //$(fiveDayCards).empty();
+    $("#day-two").empty();
+    $("#day-three").empty();
+    $("#day-four").empty();
+    $("#day-five").empty();
     
-    // $(fiveDayCards).append($("<div>").attr("class", "card castcardOne").attr("id", "castcardOne"));
-    // $(fiveDayCards).append($("<div>").attr("class", "card castcardTwo").attr("id", "castcardTwo"));
-    // $(fiveDayCards).append($("<div>").attr("class", "card castcardThree").attr("id", "castcardThree"));
-    // $(fiveDayCards).append($("<div>").attr("class", "card castcardFour").attr("id", "castcardFour"));
-    // $(fiveDayCards).append($("<div>").attr("class", "card castcardFive").attr("id", "castcardFive"));
-    
-    //dates
     //day 1
     let dayOneUnix= ((forecastdata.list[0].dt)*1000); //give me time in UNIX
     const dateOneObject = new Date(dayOneUnix)
@@ -193,6 +189,12 @@ function displayForecast(forecastdata) {
     
     
     //icons
+    $("#icon-one").empty();
+    $("#icon-two").empty();
+    $("#icon-three").empty();
+    $("#icon-four").empty();
+    $("#icon-five").empty();
+
     let iconURLONE = "https://openweathermap.org/img/wn/" + forecastdata.list[0].weather[0].icon + ".png";
     $("#icon-one").append($("<img>").attr("src", iconURLONE));
     let iconURLTwo = "https://openweathermap.org/img/wn/" + forecastdata.list[8].weather[0].icon + ".png";
@@ -203,6 +205,13 @@ function displayForecast(forecastdata) {
     $("#icon-four").append($("<img>").attr("src", iconURLFour).attr("class", "btn w-25"));
     let iconURLFive = "https://openweathermap.org/img/wn/" + forecastdata.list[32].weather[0].icon + ".png";
     $("#icon-five").append($("<img>").attr("src", iconURLFive).attr("class", "btn w-25"));
+
+    //clear previous weather data
+    $("#weather-one").empty();
+    $("#weather-two").empty();
+    $("#weather-three").empty();
+    $("#weather-four").empty();
+    $("#weather-five").empty();
 
     //temps 
     $("#weather-one").append("<p>" + "Temp: " + forecastdata.list[0].main.temp + "&deg" + "F" + "</p>") 
@@ -268,7 +277,7 @@ $(searchBtn).on("click", function(event) {
 });
 
 //click listener for any clicks on the cityHistory list 
-$("#city-history-card").on("click", ".list-group-item", function () { 
+$("#history-panel").on("click", ".button", function () { 
     //bring back up clicked city's weather conditions
     //define variable to hold city's name
     var searchedCity = $(this).text(); //export city's name as text
