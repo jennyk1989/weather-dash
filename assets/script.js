@@ -3,6 +3,7 @@ let searchBtn = $("#search-button");
 //get out of local storage...store in array that's in addition to stored cities or in the empty array
 let cityHistory = JSON.parse(localStorage.getItem("city")) || []; //parse stored data to get out of string format
 
+
 /*------------------ FUNCTION to get DATA from OPEN WEATHER API ------------------*/
 //"city" value comes from input field 
 function getWeather (city) {
@@ -119,7 +120,6 @@ function getUVdata(coorddata) {
     });  
 }
 
-
 /*--------------- 5 day forecast --------------*/
 function getForecast(data) {
    
@@ -146,18 +146,18 @@ function getForecast(data) {
     });
 }   
 
+
 function displayForecast(forecastdata) {
     console.log(forecastdata);
     //first clear previous fourcast
-    $(fiveDayTitle).empty();
-    $(fiveDayCards).empty();
+    $("#day-one").empty();
+    //$(fiveDayCards).empty();
     
-    $(fiveDayTitle).append($("<p>" + "Five Day Forecast" + "</p>").attr("class", "card-title"));
-    $(fiveDayCards).append($("<div>").attr("class", "card castcardOne").attr("id", "castcardOne"));
-    $(fiveDayCards).append($("<div>").attr("class", "card castcardTwo").attr("id", "castcardTwo"));
-    $(fiveDayCards).append($("<div>").attr("class", "card castcardThree").attr("id", "castcardThree"));
-    $(fiveDayCards).append($("<div>").attr("class", "card castcardFour").attr("id", "castcardFour"));
-    $(fiveDayCards).append($("<div>").attr("class", "card castcardFive").attr("id", "castcardFive"));
+    // $(fiveDayCards).append($("<div>").attr("class", "card castcardOne").attr("id", "castcardOne"));
+    // $(fiveDayCards).append($("<div>").attr("class", "card castcardTwo").attr("id", "castcardTwo"));
+    // $(fiveDayCards).append($("<div>").attr("class", "card castcardThree").attr("id", "castcardThree"));
+    // $(fiveDayCards).append($("<div>").attr("class", "card castcardFour").attr("id", "castcardFour"));
+    // $(fiveDayCards).append($("<div>").attr("class", "card castcardFive").attr("id", "castcardFive"));
     
     //dates
     //day 1
@@ -185,78 +185,64 @@ function displayForecast(forecastdata) {
     const splicedDateFive = dateFiveFormat.substring(0,10); //cuts out time part 
 
     
-    $("#castcardOne").append("<p>" + splicedDateOne + "</p>") 
-    $("#castcardTwo").append("<p>" + splicedDateTwo + "</p>") 
-    $("#castcardThree").append("<p>" + splicedDateThree + "</p>") 
-    $("#castcardFour").append("<p>" + splicedDateFour + "</p>") 
-    $("#castcardFive").append("<p>" + splicedDateFive + "</p>") 
+    $("#day-one").append("<p>" + splicedDateOne + "</p>") 
+    $("#day-two").append("<p>" + splicedDateTwo + "</p>") 
+    $("#day-three").append("<p>" + splicedDateThree + "</p>") 
+    $("#day-four").append("<p>" + splicedDateFour + "</p>") 
+    $("#day-five").append("<p>" + splicedDateFive + "</p>") 
+    
     
     //icons
     let iconURLONE = "https://openweathermap.org/img/wn/" + forecastdata.list[0].weather[0].icon + ".png";
-    $("#castcardOne").append($("<img>").attr("src", iconURLONE).attr("class", "btn w-25"));
+    $("#icon-one").append($("<img>").attr("src", iconURLONE));
     let iconURLTwo = "https://openweathermap.org/img/wn/" + forecastdata.list[8].weather[0].icon + ".png";
-    $("#castcardTwo").append($("<img>").attr("src", iconURLTwo).attr("class", "btn w-25"));
+    $("#icon-two").append($("<img>").attr("src", iconURLTwo).attr("class", "btn w-25"));
     let iconURLThree = "https://openweathermap.org/img/wn/" + forecastdata.list[16].weather[0].icon + ".png";
-    $("#castcardThree").append($("<img>").attr("src", iconURLThree).attr("class", "btn w-25"));
+    $("#icon-three").append($("<img>").attr("src", iconURLThree).attr("class", "btn w-25"));
     let iconURLFour = "https://openweathermap.org/img/wn/" + forecastdata.list[24].weather[0].icon + ".png";
-    $("#castcardFour").append($("<img>").attr("src", iconURLFour).attr("class", "btn w-25"));
+    $("#icon-four").append($("<img>").attr("src", iconURLFour).attr("class", "btn w-25"));
     let iconURLFive = "https://openweathermap.org/img/wn/" + forecastdata.list[32].weather[0].icon + ".png";
-    $("#castcardFive").append($("<img>").attr("src", iconURLFive).attr("class", "btn w-25"));
+    $("#icon-five").append($("<img>").attr("src", iconURLFive).attr("class", "btn w-25"));
 
     //temps 
-    let dayOneTemp = forecastdata.list[0].main.temp;
-    let dayTwoTemp = forecastdata.list[8].main.temp;
-    let dayThreeTemp = forecastdata.list[16].main.temp;
-    let dayFourTemp = forecastdata.list[24].main.temp;
-    let dayFiveTemp = forecastdata.list[32].main.temp;
-    
-    $("#castcardOne").append("<p>" + "Temp: " + dayOneTemp + "&deg" + "F" + "</p>") 
-    $("#castcardTwo").append("<p>" + "Temp: " + dayTwoTemp + "&deg" + "F" + "</p>") 
-    $("#castcardThree").append("<p>" + "Temp: " + dayThreeTemp + "&deg" + "F" + "</p>") 
-    $("#castcardFour").append("<p>" + "Temp: " + dayFourTemp + "&deg" + "F" + "</p>") 
-    $("#castcardFive").append("<p>" + "Temp: " + dayFiveTemp + "&deg" + "F" + "</p>") 
+    $("#weather-one").append("<p>" + "Temp: " + forecastdata.list[0].main.temp + "&deg" + "F" + "</p>") 
+    $("#weather-two").append("<p>" + "Temp: " + forecastdata.list[8].main.temp + "&deg" + "F" + "</p>") 
+    $("#weather-three").append("<p>" + "Temp: " + forecastdata.list[16].main.temp + "&deg" + "F" + "</p>") 
+    $("#weather-four").append("<p>" + "Temp: " + forecastdata.list[24].main.temp + "&deg" + "F" + "</p>") 
+    $("#weather-five").append("<p>" + "Temp: " + forecastdata.list[32].main.temp + "&deg" + "F" + "</p>") 
 
     //wind
-    let dayOneWind = forecastdata.list[0].wind.speed;
-    let dayTwoWind = forecastdata.list[8].wind.speed;
-    let dayThreeWind = forecastdata.list[16].wind.speed;
-    let dayFourWind= forecastdata.list[24].wind.speed;
-    let dayFiveWind = forecastdata.list[32].wind.speed;
-    
-    $("#castcardOne").append("<p>" + "Wind: " + dayOneWind + " MPH" + "</p>") 
-    $("#castcardTwo").append("<p>" + "Wind: " + dayTwoWind + " MPH" + "</p>") 
-    $("#castcardThree").append("<p>" + "Wind: " + dayThreeWind + " MPH" + "</p>") 
-    $("#castcardFour").append("<p>" + "Wind: " + dayFourWind + " MPH" + "</p>") 
-    $("#castcardFive").append("<p>" + "Wind: " + dayFiveWind + " MPH" + "</p>")
+    $("#weather-one").append("<p>" + "Wind: " + forecastdata.list[0].wind.speed + " MPH" + "</p>") 
+    $("#weather-two").append("<p>" + "Wind: " + forecastdata.list[8].wind.speed + " MPH" + "</p>") 
+    $("#weather-three").append("<p>" + "Wind: " + forecastdata.list[16].wind.speed + " MPH" + "</p>") 
+    $("#weather-four").append("<p>" + "Wind: " + forecastdata.list[24].wind.speed + " MPH" + "</p>") 
+    $("#weather-five").append("<p>" + "Wind: " + forecastdata.list[32].wind.speed + " MPH" + "</p>")
 
     //humitiy
-    let dayOneH = forecastdata.list[0].main.humidity;
-    let dayTwoH = forecastdata.list[8].main.humidity;
-    let dayThreeH = forecastdata.list[16].main.humidity;
-    let dayFourH= forecastdata.list[24].main.humidity;
-    let dayFiveH = forecastdata.list[32].main.humidity;
-    
-    $("#castcardOne").append("<p>" + "Humidity: " + dayOneH + " %" + "</p>") 
-    $("#castcardTwo").append("<p>" + "Humidity: " + dayTwoH + " %" + "</p>") 
-    $("#castcardThree").append("<p>" + "Humidity: " + dayThreeH + " %" + "</p>") 
-    $("#castcardFour").append("<p>" + "Humidity: " + dayFourH + " %" + "</p>") 
-    $("#castcardFive").append("<p>" + "Humidity: " + dayFiveH + " %" + "</p>")
+    $("#weather-one").append("<p>" + "Humidity: " + forecastdata.list[0].main.humidity + " %" + "</p>") 
+    $("#weather-two").append("<p>" + "Humidity: " + forecastdata.list[8].main.humidity + " %" + "</p>") 
+    $("#weather-three").append("<p>" + "Humidity: " + forecastdata.list[16].main.humidity + " %" + "</p>") 
+    $("#weather-four").append("<p>" + "Humidity: " + forecastdata.list[24].main.humidity + " %" + "</p>") 
+    $("#weather-five").append("<p>" + "Humidity: " + forecastdata.list[32].main.humidity + " %" + "</p>")
 };
 
 /*---------------displays cities searched in past-----------*/
+//relavent variables
+const historyPanel = $("#history-panel");
+
 function displayHistory(cityHistory) {
     console.log(cityHistory);
-    $("#city-history-card").html = "";
-    $("#city-history-card").empty();
+    //$("#history-panel").html = "";
+    //$("#history-panel").empty();
 
     //i = 1 to get rid of "null" value that keeps showing up 
     for (let i=1; i < cityHistory.length; i++) {
         let cityHistoryItem = $("<a>");
-        cityHistoryItem.addClass("list-group-item");//make the link display as a list item
+        cityHistoryItem.addClass("panel-block");//make the link display as a panel-block
         //add city name to the link
         cityHistoryItem.text(cityHistory[i]);
         cityHistoryItem.attr("href");
-        $("#city-history-card").append(cityHistoryItem);
+        $(historyPanel).append(cityHistoryItem);
         
     }
         
