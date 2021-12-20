@@ -228,10 +228,7 @@ function displayForecast(forecastdata) {
 
 /*---------------displays cities searched in past-----------*/
 function displayHistory(cityHistory) {
-    console.log(cityHistory);
-    //$("#history-panel").html = "";
-    //$("#history-panel").empty();
-
+    $("#history-panel").empty();
     //i = 1 to get rid of "null" value that keeps showing up 
     for (let i=1; i < cityHistory.length; i++) {
         let historyDiv = $("<div>").addClass("panel-block");
@@ -262,16 +259,12 @@ $(searchBtn).on("click", function(event) {
     //send city to storage for later use 
     cityHistory.push(city);
 
-    //want to be able to store each city into this the cityHistory array
-
-    console.log(city);
-    $("#city").val(""); //clear input field after it's displayed & stored
-    
     //store searched city into local storage --> localStorage.setItem (keyName, keyValue) per MDN
     //keyName = cityHistory , keyValue = value in city History
     localStorage.setItem(cityHistory, JSON.stringify(cityHistory));
     displayHistory(cityHistory);
-
+    
+    $("#city-input").val(""); //clear input field after it's displayed & stored
 });
 
 //click listener for any clicks on the cityHistory list 
