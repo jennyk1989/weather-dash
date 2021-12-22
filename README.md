@@ -5,4 +5,4 @@ Application that gives current and future weather data from a city name.
 https://jennyk1989.github.io/weather-dash/
 
 ## Screenshot
-![Screen Shot 2021-12-12 at 10 55 02 PM](https://user-images.githubusercontent.com/92952780/145755124-3cb2b7d3-f88d-4ddc-817b-606c7c3e0554.png)
+<img width="1283" alt="Screen Shot 2021-12-22 at 1 11 24 PM" src="https://user-images.githubusercontent.com/92952780/147157760-eab3b26e-8244-4914-88be-ae9981ede345.png">
