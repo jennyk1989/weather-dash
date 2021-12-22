@@ -33,8 +33,7 @@ function getWeather (city) {
 const cityName = $("#city-name");
 const cityDateIcon = $("#city-date-icon");
 const cityDate = $("#city-date");
-const weatherIcon = $("#weather-icon")
-const dateDiv = $("#dateDiv")
+const dateDiv = $("#dateDiv");
 const weatherValues = $("#weather-values");
 const uvDiv = $("#uv-div");
 
@@ -54,7 +53,7 @@ function displayWeather(data) {
 
     //icon
     let iconURL = "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
-    $(weatherIcon).append($("<img>").attr("src", iconURL));
+    $("#city-date").append($("<img>").attr("src", iconURL));
 
     //============= weather values ================/
     $(weatherValues).empty();
