@@ -237,8 +237,7 @@ function displayForecast(forecastdata) {
 /*---------------displays cities searched in past-----------*/
 function displayHistory(cityHistory) {
     $("#history-panel").empty();
-    //i = 1 to get rid of "null" value that keeps showing up 
-    for (let i=1; i < cityHistory.length; i++) {
+    for (let i=0; i < cityHistory.length; i++) {
         let historyDiv = $("<div>").addClass("panel-block");
         $("#history-panel").append(historyDiv);
         let historyButton = $("<button>" + cityHistory[i] + "</button>").addClass("button is-info is-fullwidth");
